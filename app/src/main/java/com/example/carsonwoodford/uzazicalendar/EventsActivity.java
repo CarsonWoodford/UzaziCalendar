@@ -9,6 +9,8 @@ public class EventsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
+
+        //lets add code to add an new event to the calendar
     }
 
     //Code to import and show events in a calendar go here.
