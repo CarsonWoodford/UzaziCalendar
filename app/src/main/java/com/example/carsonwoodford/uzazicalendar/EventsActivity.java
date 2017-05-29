@@ -11,6 +11,7 @@ public class EventsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_events);
 
         //lets add code to add an new event to the calendar Ok, sounds good. A second change.
+        //Maybe this one will work.
     }
 
     //Code to import and show events in a calendar go here.
