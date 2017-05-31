@@ -14,5 +14,5 @@ public class MainActivity extends AppCompatActivity {
     //function for the Events/Calendar button goes here
 
     //Function for the Donation button goes here.
-    //This is Heather's comment
+    //Heathers 2nd
 }
