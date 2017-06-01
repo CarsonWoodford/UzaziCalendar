@@ -17,7 +17,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".EventsActivity"></activity>
-        <uses-permission android:name="android.permission.READ_CALENDAR"/>
     </application>
 
 </manifest>
