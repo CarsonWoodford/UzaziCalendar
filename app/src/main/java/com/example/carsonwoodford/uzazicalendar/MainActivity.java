@@ -2,6 +2,8 @@ package com.example.carsonwoodford.uzazicalendar;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -24,14 +26,20 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import static java.security.AccessController.getContext;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
 public class MainActivity extends AppCompatActivity {
+
+    //calendar from website video
+    CompactCalendarView uzaziCalendar;
+    private SimpleDateFormat dateFormatMonth = new SimpleDateFormat("MMMM- yyyy", Locale.getDefault());
 
     private static HttpTransport HTTP_TRANSPORT;
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
@@ -109,5 +117,4 @@ public class MainActivity extends AppCompatActivity {
     //function for the Events/Calendar button goes here
 
     //Function for the Donation button goes here.
-    //The quick brown fox jumped over the lazy dog
 }
