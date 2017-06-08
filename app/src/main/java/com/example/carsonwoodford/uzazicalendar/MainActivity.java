@@ -37,6 +37,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+//import android.support.v7.app.AppCompatActivity;
+//import android.os.Bundle;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -191,8 +194,7 @@ public class MainActivity extends Activity
             case REQUEST_GOOGLE_PLAY_SERVICES:
                 if (resultCode != RESULT_OK) {
                     mOutputText.setText(
-                            "This app requires Google Play Services. Please install " +
-                                    "Google Play Services on your device and relaunch this app.");
+                            "This app requires Google Play Services. Please install Google Play Services on your device and relaunch this app.");
                 } else {
                     getResultsFromApi();
                 }
