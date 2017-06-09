@@ -36,6 +36,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+//import android.widget.RelativeLayout;
 import android.widget.TextView;
 //import android.support.v7.app.AppCompatActivity;
 //import android.os.Bundle;
@@ -73,53 +74,33 @@ public class MainActivity extends Activity
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //mOutputText = (TextView) this.findViewById(R.id.ToBeDeleted);
+        mOutputText = new TextView(this);
         //assertEquals(items, events.getItems());
         //assertTrue(JSON_FACTORY == JacksonFactory.getDefaultInstance());
         //assertEquals(myCalendar.calendar().toString, "Uzazi Village");
-
-        LinearLayout activityLayout = new LinearLayout(this);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
-        activityLayout.setLayoutParams(lp);
-        activityLayout.setOrientation(LinearLayout.VERTICAL);
-        activityLayout.setPadding(16, 16, 16, 16);
 
         ViewGroup.LayoutParams tlp = new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        mCallApiButton = new Button(this);
-        mCallApiButton.setText(BUTTON_TEXT);
-        mCallApiButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mCallApiButton.setEnabled(false);
-                mOutputText.setText("");
-                getResultsFromApi();
-                mCallApiButton.setEnabled(true);
-            }
-        });
-        activityLayout.addView(mCallApiButton);
-
-        mOutputText = new TextView(this);
-        mOutputText.setLayoutParams(tlp);
-        mOutputText.setPadding(16, 16, 16, 16);
-        mOutputText.setVerticalScrollBarEnabled(true);
-        mOutputText.setMovementMethod(new ScrollingMovementMethod());
+        //mOutputText = (TextView) findViewById(R.id.ToBeDeleted);
+        mOutputText.setText("");
+        //mOutputText.setLayoutParams(tlp);
+        //mOutputText.setPadding(16, 16, 16, 16);
+        //mOutputText.setVerticalScrollBarEnabled(true);
+        //mOutputText.setMovementMethod(new ScrollingMovementMethod());
         mOutputText.setText(
                 "Click the \'" + BUTTON_TEXT +"\' button to test the API.");
-        activityLayout.addView(mOutputText);
 
         mProgress = new ProgressDialog(this);
         mProgress.setMessage("Calling Google Calendar API ...");
-
-        setContentView(activityLayout);
 
         // Initialize credentials and service object.
         mCredential = GoogleAccountCredential.usingOAuth2(
                 getApplicationContext(), Arrays.asList(SCOPES))
                 .setBackOff(new ExponentialBackOff());
+        getResultsFromApi();
     }
 
     /**
@@ -353,15 +334,18 @@ public class MainActivity extends Activity
 
         /**
          * Fetch a list of the next 10 events from the primary calendar.
-         * @return List of Strings describing returned events.
-         * @throws IOException
+         * //@return List of Strings describing returned events.
+         * //@throws //IOException
          */
         private List<String> getDataFromApi() throws IOException {
             // List the next 10 events from the primary calendar.
             DateTime now = new DateTime(System.currentTimeMillis());
             List<String> eventStrings = new ArrayList<String>();
-            Events events = mService.events().list("primary")
-                    .setMaxResults(10)
+            CalendarListEntry publicCalendar = new CalendarListEntry();
+            publicCalendar.setId("i3jbqatm5hjsmf101mfd0isadk@group.calendar.google.com");
+            mService.calendarList().insert(publicCalendar);
+            Events events = mService.events().list(publicCalendar.getId())
+                    .setMaxResults(20)
                     .setTimeMin(now)
                     .setOrderBy("startTime")
                     .setSingleEvents(true)
