@@ -14,13 +14,14 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="-26dp"
         app:layout_constraintBottom_toTopOf="@+id/compactcalendar_view"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.372"
-        app:srcCompat="@drawable/uzazi_graphic" />
+        app:srcCompat="@mipmap/uzazi_graphic" />
 
     <TextView
         android:id="@+id/eventTime"
@@ -86,6 +87,7 @@
         android:layout_marginTop="8dp"
         android:text="eventDescription"
         android:textAlignment="textStart"
+        android:layout_gravity="start"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/colorText"
         app:layout_constraintBottom_toBottomOf="parent"
