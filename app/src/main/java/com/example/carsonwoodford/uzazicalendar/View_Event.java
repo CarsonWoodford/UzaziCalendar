@@ -8,6 +8,6 @@ public class View_Event extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view__event);
+        setContentView(R.layout.activity_events);
     }
 }
