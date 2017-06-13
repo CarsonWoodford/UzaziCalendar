@@ -81,7 +81,7 @@ public class MainActivity extends Activity
             // Restore value of members from saved state
             wantsNotes = savedInstanceState.getBoolean(STATE_NOTIFICATIONS);
         } else {
-            // Probably initialize members with default values for a new instance
+            startActivity(new Intent(MainActivity.this, RequestNotifications.class));
         }
         setContentView(R.layout.activity_main);
         //mOutputText = (TextView) this.findViewById(R.id.ToBeDeleted);
