@@ -183,6 +183,8 @@ public class MainActivity extends Activity
             int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch(requestCode) {
+            case 1:
+                wantsNotes = data.getExtras().getBoolean("canNotify");
             case REQUEST_GOOGLE_PLAY_SERVICES:
                 if (resultCode != RESULT_OK) {
                     mOutputText.setText(
@@ -415,11 +417,6 @@ public class MainActivity extends Activity
             }
         }
     }
-
-    /*protected void onActivityResult (int requestCode, int resultCode, Intent data) {
-        // Collect data from the intent and use it
-         wantsNotes = data.getExtras().getBoolean("canNotify");
-    }*/
 
 
 
