@@ -65,14 +65,24 @@ public class MainActivity extends Activity
     static final int REQUEST_AUTHORIZATION = 1001;
     static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
     static final int REQUEST_PERMISSION_GET_ACCOUNTS = 1003;
+    static final String STATE_NOTIFICATIONS = "WantsNotifications";
 
     private static final String BUTTON_TEXT = "Call Google Calendar API";
     private static final String PREF_ACCOUNT_NAME = "accountName";
     private static final String[] SCOPES = { CalendarScopes.CALENDAR_READONLY };
 
+    private boolean wantsNotes;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            // Restore value of members from saved state
+            wantsNotes = savedInstanceState.getBoolean(STATE_NOTIFICATIONS);
+        } else {
+            // Probably initialize members with default values for a new instance
+        }
         setContentView(R.layout.activity_main);
         //mOutputText = (TextView) this.findViewById(R.id.ToBeDeleted);
         mOutputText = new TextView(this);
