@@ -416,10 +416,10 @@ public class MainActivity extends Activity
         }
     }
 
-    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+    /*protected void onActivityResult (int requestCode, int resultCode, Intent data) {
         // Collect data from the intent and use it
-        String value = data.getString("canNotify");
-    }
+         wantsNotes = data.getExtras().getBoolean("canNotify");
+    }*/
 
 
 
