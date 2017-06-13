@@ -81,7 +81,8 @@ public class MainActivity extends Activity
             // Restore value of members from saved state
             wantsNotes = savedInstanceState.getBoolean(STATE_NOTIFICATIONS);
         } else {
-            startActivity(new Intent(MainActivity.this, RequestNotifications.class));
+            int requestCode = 1; // Or some number you choose
+            startActivityForResult(new Intent(MainActivity.this, RequestNotifications.class), requestCode);
         }
         setContentView(R.layout.activity_main);
         //mOutputText = (TextView) this.findViewById(R.id.ToBeDeleted);
@@ -413,6 +414,11 @@ public class MainActivity extends Activity
                 mOutputText.setText("Request cancelled.");
             }
         }
+    }
+
+    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+        // Collect data from the intent and use it
+        String value = data.getString("canNotify");
     }
 
 
