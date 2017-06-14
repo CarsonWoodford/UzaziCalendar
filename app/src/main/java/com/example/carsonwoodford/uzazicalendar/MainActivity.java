@@ -34,6 +34,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 //import android.text.method.ScrollingMovementMethod;
 //import android.view.View;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -47,6 +48,7 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -74,11 +76,15 @@ public class MainActivity extends Activity
     private static final String[] SCOPES = { CalendarScopes.CALENDAR_READONLY };
     public static final String PASSED_EVENTS = "Passed Events";
 
+    CompactCalendarView compactCalendarView;
+
     private boolean wantsNotes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+
+        compactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
 
         if (savedInstanceState != null) {
             // Restore value of members from saved state
@@ -115,6 +121,22 @@ public class MainActivity extends Activity
                 getApplicationContext(), Arrays.asList(SCOPES))
                 .setBackOff(new ExponentialBackOff());
         getResultsFromApi();
+
+        final Intent intent = new Intent(this, View_Event.class);
+
+        compactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
+            @Override
+            public void onDayClick(Date dateClicked) {
+                CompactCalendarView compactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
+                List<com.github.sundeepk.compactcalendarview.domain.Event> events = compactCalendarView.getEvents(dateClicked);
+                intent.putExtra(PASSED_EVENTS, events.toString());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onMonthScroll(Date firstDayOfNewMonth) {
+            }
+        });
     }
 
     /**
@@ -423,24 +445,7 @@ public class MainActivity extends Activity
 
 
 
-
-
     //function for the Events/Calendar button goes here
-    public void goToEditEvents(View view){
-        Intent intent = new Intent(this, View_Event.class);
-        String passingEvents = getEventsFromSelectedDate();
-        intent.putExtra(PASSED_EVENTS, passingEvents);
-        startActivity(intent);
-    }
-
-    private String getEventsFromSelectedDate(){
-        String events;
-        //must use selected date from CompactCalendar
-        CompactCalendarView compactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
-        //This should get events from the selected date and convert them to a string.
-        //compactCalendarView.
-        return events;
-    }
 
     //Function for the Donation button goes here.
 }
