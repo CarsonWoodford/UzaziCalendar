@@ -1,5 +1,6 @@
 package com.example.carsonwoodford.uzazicalendar;
 
+import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -33,6 +34,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 //import android.text.method.ScrollingMovementMethod;
 //import android.view.View;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 //import android.widget.LinearLayout;
@@ -70,6 +72,7 @@ public class MainActivity extends Activity
     private static final String BUTTON_TEXT = "Call Google Calendar API";
     private static final String PREF_ACCOUNT_NAME = "accountName";
     private static final String[] SCOPES = { CalendarScopes.CALENDAR_READONLY };
+    public static final String PASSED_EVENTS = "Passed Events";
 
     private boolean wantsNotes;
 
@@ -423,6 +426,21 @@ public class MainActivity extends Activity
 
 
     //function for the Events/Calendar button goes here
+    public void goToEditEvents(View view){
+        Intent intent = new Intent(this, View_Event.class);
+        String passingEvents = getEventsFromSelectedDate();
+        intent.putExtra(PASSED_EVENTS, passingEvents);
+        startActivity(intent);
+    }
+
+    private String getEventsFromSelectedDate(){
+        String events;
+        //must use selected date from CompactCalendar
+        CompactCalendarView compactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
+        //This should get events from the selected date and convert them to a string.
+        //compactCalendarView.
+        return events;
+    }
 
     //Function for the Donation button goes here.
 }

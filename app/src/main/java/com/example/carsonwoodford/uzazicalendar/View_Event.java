@@ -11,6 +11,8 @@ public class View_Event extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
 
+        Intent intent = getIntent();
+        String passedEvents = intent.getStringExtra(MainActivity.PASSED_EVENTS);
     }
 
 
