@@ -83,17 +83,20 @@ public class MainActivity extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
 
         compactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
 
-        if (savedInstanceState != null) {
+        /*if (savedInstanceState != null) {
             // Restore value of members from saved state
             wantsNotes = savedInstanceState.getBoolean(STATE_NOTIFICATIONS);
         } else {
             int requestCode = 1; // Or some number you choose
             startActivityForResult(new Intent(MainActivity.this, RequestNotifications.class), requestCode);
-        }
-        setContentView(R.layout.activity_main);
+        }*/
+
+
         //mOutputText = (TextView) this.findViewById(R.id.ToBeDeleted);
         mOutputText = new TextView(this);
         //assertEquals(items, events.getItems());
@@ -124,10 +127,17 @@ public class MainActivity extends Activity
 
         final Intent intent = new Intent(this, View_Event.class);
 
+        if (compactCalendarView == null){
+            Log.d("testing","it is null");
+        }
+        else
+            Log.d("testing","it is not null");
+
+
         compactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
             public void onDayClick(Date dateClicked) {
-                CompactCalendarView compactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
+                //CompactCalendarView compactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
                 List<com.github.sundeepk.compactcalendarview.domain.Event> events = compactCalendarView.getEvents(dateClicked);
                 intent.putExtra(PASSED_EVENTS, events.toString());
                 startActivity(intent);
