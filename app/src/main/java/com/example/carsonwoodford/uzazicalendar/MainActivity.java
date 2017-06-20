@@ -75,6 +75,7 @@ public class MainActivity extends Activity
     private static final String PREF_ACCOUNT_NAME = "accountName";
     private static final String[] SCOPES = { CalendarScopes.CALENDAR_READONLY };
     public static final String PASSED_EVENTS = "Passed Events";
+    public static final String PREFS_NAME = "MyPrefsFile";
 
     CompactCalendarView compactCalendarView;
 
@@ -88,13 +89,13 @@ public class MainActivity extends Activity
 
         compactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
 
-        /*if (savedInstanceState != null) {
+        if (savedInstanceState != null) {
             // Restore value of members from saved state
             wantsNotes = savedInstanceState.getBoolean(STATE_NOTIFICATIONS);
         } else {
             int requestCode = 1; // Or some number you choose
             startActivityForResult(new Intent(MainActivity.this, RequestNotifications.class), requestCode);
-        }*/
+        }
 
 
         //mOutputText = (TextView) this.findViewById(R.id.ToBeDeleted);
@@ -137,7 +138,6 @@ public class MainActivity extends Activity
         compactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
             public void onDayClick(Date dateClicked) {
-                //CompactCalendarView compactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
                 List<com.github.sundeepk.compactcalendarview.domain.Event> events = compactCalendarView.getEvents(dateClicked);
                 intent.putExtra(PASSED_EVENTS, events.toString());
                 startActivity(intent);
@@ -161,6 +161,7 @@ public class MainActivity extends Activity
             acquireGooglePlayServices();
         }  else if (! isDeviceOnline()) {
             mOutputText.setText("No network connection available.");
+            Log.e("Debugging", "No network connection available");
         } else if (mCredential.getSelectedAccountName() == null) {
             chooseAccount();
         }else {
@@ -220,10 +221,16 @@ public class MainActivity extends Activity
         switch(requestCode) {
             case 1:
                 wantsNotes = data.getExtras().getBoolean("canNotify");
+                SharedPreferences settings2 = getSharedPreferences(PREFS_NAME, 0);
+                SharedPreferences.Editor editor2 = settings2.edit();
+                editor2.putBoolean("silentMode", wantsNotes);
+                editor2.commit();
+                break;
             case REQUEST_GOOGLE_PLAY_SERVICES:
                 if (resultCode != RESULT_OK) {
                     mOutputText.setText(
                             "This app requires Google Play Services. Please install Google Play Services on your device and relaunch this app.");
+                    Log.e("Debugging", "This app requires Google Play Services. Please install Google Play Services on your device and relaunch this app.");
                 } else {
                     getResultsFromApi();
                 }
@@ -410,6 +417,7 @@ public class MainActivity extends Activity
                 eventStrings.add(
                         String.format("%s (%s)", event.getSummary(), start));
             }
+            Log.i("Connection","Successfully connected to API.");
             return eventStrings;
         }
 
@@ -425,6 +433,7 @@ public class MainActivity extends Activity
             mProgress.hide();
             if (output == null || output.size() == 0) {
                 mOutputText.setText("No results returned.");
+                Log.e("Debugging", "No results returned");
             } else {
                 output.add(0, "Data retrieved using the Google Calendar API:");
                 mOutputText.setText(TextUtils.join("\n", output));
@@ -446,9 +455,11 @@ public class MainActivity extends Activity
                 } else {
                     mOutputText.setText("The following error occurred:\n"
                             + mLastError.getMessage());
+                    Log.e("Debugging", "The following error occurred: " + mLastError.getMessage());
                 }
             } else {
                 mOutputText.setText("Request cancelled.");
+                Log.e("Debugging", "Request cancelled.");
             }
         }
     }

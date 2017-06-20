@@ -13,7 +13,7 @@ import android.widget.Button;
  * Created by CarsonWoodford on 6/12/17.
  */
 
-class RequestNotifications extends Activity{
+public class RequestNotifications extends Activity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
