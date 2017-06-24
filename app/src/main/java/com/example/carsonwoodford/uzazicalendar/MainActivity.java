@@ -1,6 +1,7 @@
 package com.example.carsonwoodford.uzazicalendar;
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
+import com.github.sundeepk.compactcalendarview.domain.*;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -17,6 +18,7 @@ import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.client.util.DateTime;
 
 import com.google.api.services.calendar.model.*;
+import com.google.api.services.calendar.model.Event;
 
 import android.Manifest;
 import android.accounts.AccountManager;
@@ -26,6 +28,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -79,6 +82,8 @@ public class MainActivity extends Activity
 
     CompactCalendarView compactCalendarView;
 
+    List<customEvent> customEvents = new ArrayList<customEvent>();
+
     private boolean wantsNotes;
 
     @Override
@@ -89,13 +94,13 @@ public class MainActivity extends Activity
 
         compactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
 
-        if (savedInstanceState != null) {
+        /*if (savedInstanceState != null) {
             // Restore value of members from saved state
             wantsNotes = savedInstanceState.getBoolean(STATE_NOTIFICATIONS);
         } else {
             int requestCode = 1; // Or some number you choose
             startActivityForResult(new Intent(MainActivity.this, RequestNotifications.class), requestCode);
-        }
+        }*/
 
 
         //mOutputText = (TextView) this.findViewById(R.id.ToBeDeleted);
@@ -139,7 +144,14 @@ public class MainActivity extends Activity
             @Override
             public void onDayClick(Date dateClicked) {
                 List<com.github.sundeepk.compactcalendarview.domain.Event> events = compactCalendarView.getEvents(dateClicked);
-                intent.putExtra(PASSED_EVENTS, events.toString());
+                for (com.github.sundeepk.compactcalendarview.domain.Event element : events){
+                    for (customEvent elementOther : customEvents) {
+                        if (element.getTimeInMillis() == elementOther.getTime()) {
+                            intent.putExtra(PASSED_EVENTS, "TempTestString");
+                        }
+                    }
+                }
+                //intent.putExtra(PASSED_EVENTS, events.toString());
                 startActivity(intent);
             }
 
@@ -413,7 +425,13 @@ public class MainActivity extends Activity
                     // All-day events don't have start times, so just use
                     // the start date.
                     start = event.getStart().getDate();
+                    //Log.v("NoReason", "called");
                 }
+                com.github.sundeepk.compactcalendarview.domain.Event temp = new com.github.sundeepk.compactcalendarview.domain.Event(Color.MAGENTA, start.getValue(), event.getSummary());
+                compactCalendarView.addEvent(temp, false);
+                customEvent tempEvent = new customEvent(event.getSummary(), event.getDescription(), start.getValue());
+                customEvents.add(tempEvent);
+                //Log.v("NoReason", "Thats not Good");
                 eventStrings.add(
                         String.format("%s (%s)", event.getSummary(), start));
             }
