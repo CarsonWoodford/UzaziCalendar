@@ -18,6 +18,7 @@ public class customEvent implements Parcelable{
 
     customEvent(){
         name = "";
+        time = 0;
         loc = "";
         desc = "";
         ppl = "";
@@ -27,23 +28,8 @@ public class customEvent implements Parcelable{
         name = inputName;
         desc = inputDesc;
         time = inputTime;
-    }
-
-    public static final Parcelable.Creator<customEvent> CREATOR
-            = new Parcelable.Creator<customEvent>() {
-        public customEvent createFromParcel(Parcel in) {
-            return new customEvent(in);
-        }
-
-        public customEvent[] newArray(int size) {
-            return new customEvent[size];
-        }
-    };
-
-    private customEvent(Parcel in) {
-        name = in.readString();
-        desc = in.readString();
-        time = in.readLong();
+        loc = "";
+        ppl = "";
     }
 
     public String getName() {
@@ -99,6 +85,15 @@ public class customEvent implements Parcelable{
         return 0;
     }
 
+
+    protected customEvent(Parcel in) {
+        name = in.readString();
+        time = in.readLong();
+        loc = in.readString();
+        desc = in.readString();
+        ppl = in.readString();
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
@@ -107,4 +102,17 @@ public class customEvent implements Parcelable{
         dest.writeString(desc);
         dest.writeString(ppl);
     }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<customEvent> CREATOR = new Parcelable.Creator<customEvent>() {
+        @Override
+        public customEvent createFromParcel(Parcel in) {
+            return new customEvent(in);
+        }
+
+        @Override
+        public customEvent[] newArray(int size) {
+            return new customEvent[size];
+        }
+    };
 }
