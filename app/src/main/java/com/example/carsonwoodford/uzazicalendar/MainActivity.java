@@ -61,6 +61,15 @@ import static java.security.AccessController.getContext;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
+/**
+ * Main_Activity
+ * MainActivity is the basis for the app. It contains the calendar, which
+ * is the main part of the app, and the code to supply it with information.
+ * It also contains the neccessary code and buttons to navigate to the other
+ * activities in the app as well as pass information along to them.
+ * @author Carson Woodford, Heather Brune, Marcus Hedgecock
+ */
+
 public class MainActivity extends Activity
         implements EasyPermissions.PermissionCallbacks {
     GoogleAccountCredential mCredential;
@@ -141,6 +150,10 @@ public class MainActivity extends Activity
 
 
         compactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
+            /**
+             * Gets the selected date and opens a new activity with it.
+             * @param dateClicked indicates the selected date
+             */
             @Override
             public void onDayClick(Date dateClicked) {
                 List<com.github.sundeepk.compactcalendarview.domain.Event> events = compactCalendarView.getEvents(dateClicked);
@@ -155,6 +168,10 @@ public class MainActivity extends Activity
                 startActivity(intent);
             }
 
+            /**
+             * Unused function that is called when the month is changed.
+             * @param firstDayOfNewMonth sets the first day of the month.
+             */
             @Override
             public void onMonthScroll(Date firstDayOfNewMonth) {
             }
