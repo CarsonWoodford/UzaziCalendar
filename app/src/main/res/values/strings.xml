@@ -2,4 +2,5 @@
     <string name="app_name">UzaziCalendar</string>
     <string name="EventButton">Events</string>
     <string name="DonateButton">Donate</string>
+    <string name="uzazi_graphic">Uzazi Graphic</string>
 </resources>

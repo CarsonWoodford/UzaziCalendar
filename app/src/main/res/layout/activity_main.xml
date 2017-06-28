@@ -10,7 +10,7 @@
     tools:layout_editor_absoluteX="0dp">
 
 
-    //may display calendar...
+
 
     <com.github.sundeepk.compactcalendarview.CompactCalendarView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/compactcalendar_view"
@@ -86,8 +86,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.491"
-        app:srcCompat="@drawable/uzazi_graphic" />
+        app:layout_constraintVertical_bias="0.423"
+        android:src="@drawable/uzazi_graphic"
+        android:contentDescription="@string/uzazi_graphic" />
 
 
 
