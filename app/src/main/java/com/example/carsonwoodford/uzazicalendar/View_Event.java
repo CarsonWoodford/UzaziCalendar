@@ -5,6 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+/**
+ * View Event is called to display the google calendar information
+ * for the date pressed using the activity_events.xml
+ */
 public class View_Event extends AppCompatActivity {
 
     @Override
