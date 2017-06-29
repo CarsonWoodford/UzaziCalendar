@@ -160,7 +160,8 @@ public class MainActivity extends Activity
                 for (com.github.sundeepk.compactcalendarview.domain.Event element : events){
                     for (customEvent elementOther : customEvents) {
                         if (element.getTimeInMillis() == elementOther.getTime()) {
-                            intent.putExtra(PASSED_EVENTS, "TempTestString");
+                            intent.putExtra(PASSED_EVENTS, elementOther);
+                            //intent.putExtra(PASSED_EVENTS, "TempTestString");
                         }
                     }
                 }
