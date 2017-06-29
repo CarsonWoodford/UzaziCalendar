@@ -44,6 +44,7 @@ import android.widget.Button;
 //import android.widget.LinearLayout;
 //import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 //import android.support.v7.app.AppCompatActivity;
 //import android.os.Bundle;
 
@@ -190,7 +191,9 @@ public class MainActivity extends Activity
         if (! isGooglePlayServicesAvailable()) {
             acquireGooglePlayServices();
         }  else if (! isDeviceOnline()) {
-            mOutputText.setText("No network connection available.");
+            //mOutputText.setText("No network connection available.");
+            Toast.makeText(MainActivity.this, "No network connection availible",
+                    Toast.LENGTH_LONG).show();
             Log.e("Debugging", "No network connection available");
         } else if (mCredential.getSelectedAccountName() == null) {
             chooseAccount();
@@ -254,12 +257,14 @@ public class MainActivity extends Activity
                 SharedPreferences settings2 = getSharedPreferences(PREFS_NAME, 0);
                 SharedPreferences.Editor editor2 = settings2.edit();
                 editor2.putBoolean("silentMode", wantsNotes);
-                editor2.commit();
+                editor2.apply();
                 break;
             case REQUEST_GOOGLE_PLAY_SERVICES:
                 if (resultCode != RESULT_OK) {
-                    mOutputText.setText(
-                            "This app requires Google Play Services. Please install Google Play Services on your device and relaunch this app.");
+                    //mOutputText.setText(
+                    //        "This app requires Google Play Services. Please install Google Play Services on your device and relaunch this app.");
+                    Toast.makeText(MainActivity.this, "This app requires Google Play Services. Please install Google Play Services on your device and relaunch this app.",
+                            Toast.LENGTH_LONG).show();
                     Log.e("Debugging", "This app requires Google Play Services. Please install Google Play Services on your device and relaunch this app.");
                 } else {
                     getResultsFromApi();
@@ -468,7 +473,9 @@ public class MainActivity extends Activity
         protected void onPostExecute(List<String> output) {
             mProgress.hide();
             if (output == null || output.size() == 0) {
-                mOutputText.setText("No results returned.");
+                //mOutputText.setText("No results returned.");
+                Toast.makeText(MainActivity.this, "No results returned",
+                        Toast.LENGTH_LONG).show();
                 Log.e("Debugging", "No results returned");
             } else {
                 output.add(0, "Data retrieved using the Google Calendar API:");
@@ -489,12 +496,16 @@ public class MainActivity extends Activity
                             ((UserRecoverableAuthIOException) mLastError).getIntent(),
                             MainActivity.REQUEST_AUTHORIZATION);
                 } else {
-                    mOutputText.setText("The following error occurred:\n"
-                            + mLastError.getMessage());
+                    //mOutputText.setText("The following error occurred:\n"
+                    //        + mLastError.getMessage());
+                    Toast.makeText(MainActivity.this, "The following error occured:\n" + mLastError.getMessage(),
+                            Toast.LENGTH_LONG).show();
                     Log.e("Debugging", "The following error occurred: " + mLastError.getMessage());
                 }
             } else {
-                mOutputText.setText("Request cancelled.");
+                //mOutputText.setText("Request cancelled.");
+                Toast.makeText(MainActivity.this, "Request cancelled",
+                        Toast.LENGTH_LONG).show();
                 Log.e("Debugging", "Request cancelled.");
             }
         }
