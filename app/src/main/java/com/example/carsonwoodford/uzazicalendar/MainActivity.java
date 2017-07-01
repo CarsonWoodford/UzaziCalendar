@@ -31,6 +31,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -516,4 +517,29 @@ public class MainActivity extends Activity
     //function for the Events/Calendar button goes here
 
     //Function for the Donation button goes here.
+    // these functions are not quite finished. We need to find out the correct URL
+    // to send them to in order to make a donation.
+
+    /**
+     * Sends user to correct site to make a donation
+     */
+    public void goToPayPal(View view) {
+        goToUrl("https://www.paypal.com/");
+    }
+
+    /**
+     * Sends user to contact info page on website
+     */
+    public void goToUzaziVillage(View view) {
+        goToUrl("http://www.uzazivillage.org/about-us/contact-us/");
+}
+
+    /**
+     * Assists in sending user to a webpage outside the app
+     */
+    public void goToUrl(String url) {
+        Uri theUrl = Uri.parse(url);
+        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, theUrl);
+        startActivity(launchBrowser);
+    }
 }
