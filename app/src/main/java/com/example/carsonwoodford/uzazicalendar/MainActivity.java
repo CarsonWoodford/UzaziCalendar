@@ -14,9 +14,10 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.ExponentialBackOff;
 
-import com.google.api.services.calendar.CalendarScopes;
+import com.google.api.services.calendar.*;
 import com.google.api.client.util.DateTime;
 
+import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.*;
 import com.google.api.services.calendar.model.Event;
 
@@ -87,9 +88,11 @@ public class MainActivity extends Activity
 
     private static final String BUTTON_TEXT = "Call Google Calendar API";
     private static final String PREF_ACCOUNT_NAME = "accountName";
-    private static final String[] SCOPES = { CalendarScopes.CALENDAR_READONLY };
+    private static final String[] SCOPES = { CalendarScopes.CALENDAR };
     public static final String PASSED_EVENTS = "Passed Events";
     public static final String PREFS_NAME = "MyPrefsFile";
+
+    private com.google.api.services.calendar.Calendar mService = null;
 
     CompactCalendarView compactCalendarView;
 
@@ -163,7 +166,6 @@ public class MainActivity extends Activity
                     for (customEvent elementOther : customEvents) {
                         if (element.getTimeInMillis() == elementOther.getTime()) {
                             intent.putExtra(PASSED_EVENTS, elementOther);
-                            //intent.putExtra(PASSED_EVENTS, "TempTestString");
                         }
                     }
                 }
@@ -179,6 +181,56 @@ public class MainActivity extends Activity
             public void onMonthScroll(Date firstDayOfNewMonth) {
             }
         });
+
+
+
+
+        //Test to insert an event
+        /*Event event = new Event()
+                .setSummary("Added event")
+                .setLocation("800 Howard St., San Francisco, CA 94103")
+                .setDescription("This was added through code");
+
+        DateTime startDateTime = new DateTime("2017-07-04T09:00:00-07:00");
+        EventDateTime start = new EventDateTime()
+                .setDateTime(startDateTime)
+                .setTimeZone("America/Los_Angeles");
+        event.setStart(start);
+
+        DateTime endDateTime = new DateTime("2017-07-04T17:00:00-07:00");
+        EventDateTime end = new EventDateTime()
+                .setDateTime(endDateTime)
+                .setTimeZone("America/Los_Angeles");
+        event.setEnd(end);*/
+
+        //String[] recurrence = new String[] {"RRULE:FREQ=DAILY;COUNT=2"};
+        //event.setRecurrence(Arrays.asList(recurrence));
+
+        /*EventAttendee[] attendees = new EventAttendee[] {
+                new EventAttendee().setEmail("lpage@example.com"),
+                new EventAttendee().setEmail("sbrin@example.com"),
+        };
+        event.setAttendees(Arrays.asList(attendees));
+
+        EventReminder[] reminderOverrides = new EventReminder[] {
+                new EventReminder().setMethod("email").setMinutes(24 * 60),
+                new EventReminder().setMethod("popup").setMinutes(10),
+        };
+        Event.Reminders reminders = new Event.Reminders()
+                .setUseDefault(false)
+                .setOverrides(Arrays.asList(reminderOverrides));
+        event.setReminders(reminders);*/
+
+        /*String calendarId = "i3jbqatm5hjsmf101mfd0isadk@group.calendar.google.com";
+        try{
+            event = mService.events().insert(calendarId, event).execute();
+        } catch (Exception e){
+            Log.e("Insert","Inserting didn't work" + e.getMessage());
+        }*/
+        //System.out.printf("Event created: %s\n", event.getHtmlLink());
+
+        //new InsertTask().execute();
+
     }
 
     /**
@@ -391,12 +443,27 @@ public class MainActivity extends Activity
         dialog.show();
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * An asynchronous task that handles the Google Calendar API call.
      * Placing the API calls in their own task ensures the UI stays responsive.
      */
     private class MakeRequestTask extends AsyncTask<Void, Void, List<String>> {
-        private com.google.api.services.calendar.Calendar mService = null;
+        //private com.google.api.services.calendar.Calendar mService = null;
         private Exception mLastError = null;
 
         MakeRequestTask(GoogleAccountCredential credential) {
@@ -455,7 +522,6 @@ public class MainActivity extends Activity
                 compactCalendarView.addEvent(temp, false);
                 customEvent tempEvent = new customEvent(event.getSummary(), event.getDescription(), start.getValue());
                 customEvents.add(tempEvent);
-                //Log.v("NoReason", "Thats not Good");
                 eventStrings.add(
                         String.format("%s (%s)", event.getSummary(), start));
             }
@@ -513,6 +579,73 @@ public class MainActivity extends Activity
     }
 
 
+
+
+
+
+
+
+
+
+    /**
+     * An asynchronous task that handles the Google Calendar API call.
+     * Placing the API calls in their own task ensures the UI stays responsive.
+     */
+    private class InsertTask extends AsyncTask<Void, Void, List<String>> {
+        //private Exception mLastError = null;
+        Event event;
+        DateTime startDateTime;
+        EventDateTime start;
+        DateTime endDateTime;
+        EventDateTime end;
+
+        InsertTask() {
+            event = new Event()
+                    .setSummary("Added event")
+                    .setLocation("800 Howard St., San Francisco, CA 94103")
+                    .setDescription("This was added through code");
+
+            startDateTime = new DateTime("2017-07-04T09:00:00-07:00");
+            start = new EventDateTime()
+                    .setDateTime(startDateTime)
+                    .setTimeZone("America/Los_Angeles");
+            event.setStart(start);
+
+            endDateTime = new DateTime("2017-07-04T17:00:00-07:00");
+            end = new EventDateTime()
+                    .setDateTime(endDateTime)
+                    .setTimeZone("America/Los_Angeles");
+            event.setEnd(end);
+        }
+
+        /**
+         * Background task to call Google Calendar API.
+         * @param params no parameters needed for this task.
+         */
+        @Override
+        protected List<String> doInBackground(Void... params) {
+            String calendarId = "i3jbqatm5hjsmf101mfd0isadk@group.calendar.google.com";
+            try{
+                event = mService.events().insert(calendarId, event).execute();
+                return null;
+            } catch (Exception e){
+                Log.e("Insert","Inserting didn't work: " + e.getMessage());
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected void onPostExecute(List<String> output) {
+        }
+
+        @Override
+        protected void onCancelled() {
+        }
+    }
 
     //function for the Events/Calendar button goes here
 
