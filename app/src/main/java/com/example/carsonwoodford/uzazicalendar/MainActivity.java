@@ -14,9 +14,10 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.ExponentialBackOff;
 
-import com.google.api.services.calendar.CalendarScopes;
+import com.google.api.services.calendar.*;
 import com.google.api.client.util.DateTime;
 
+import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.*;
 import com.google.api.services.calendar.model.Event;
 
@@ -31,6 +32,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -44,6 +46,7 @@ import android.widget.Button;
 //import android.widget.LinearLayout;
 //import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 //import android.support.v7.app.AppCompatActivity;
 //import android.os.Bundle;
 
@@ -85,9 +88,11 @@ public class MainActivity extends Activity
 
     private static final String BUTTON_TEXT = "Call Google Calendar API";
     private static final String PREF_ACCOUNT_NAME = "accountName";
-    private static final String[] SCOPES = { CalendarScopes.CALENDAR_READONLY };
+    private static final String[] SCOPES = { CalendarScopes.CALENDAR };
     public static final String PASSED_EVENTS = "Passed Events";
     public static final String PREFS_NAME = "MyPrefsFile";
+
+    private com.google.api.services.calendar.Calendar mService = null;
 
     CompactCalendarView compactCalendarView;
 
@@ -160,7 +165,7 @@ public class MainActivity extends Activity
                 for (com.github.sundeepk.compactcalendarview.domain.Event element : events){
                     for (customEvent elementOther : customEvents) {
                         if (element.getTimeInMillis() == elementOther.getTime()) {
-                            intent.putExtra(PASSED_EVENTS, "TempTestString");
+                            intent.putExtra(PASSED_EVENTS, elementOther);
                         }
                     }
                 }
@@ -176,6 +181,56 @@ public class MainActivity extends Activity
             public void onMonthScroll(Date firstDayOfNewMonth) {
             }
         });
+
+
+
+
+        //Test to insert an event
+        /*Event event = new Event()
+                .setSummary("Added event")
+                .setLocation("800 Howard St., San Francisco, CA 94103")
+                .setDescription("This was added through code");
+
+        DateTime startDateTime = new DateTime("2017-07-04T09:00:00-07:00");
+        EventDateTime start = new EventDateTime()
+                .setDateTime(startDateTime)
+                .setTimeZone("America/Los_Angeles");
+        event.setStart(start);
+
+        DateTime endDateTime = new DateTime("2017-07-04T17:00:00-07:00");
+        EventDateTime end = new EventDateTime()
+                .setDateTime(endDateTime)
+                .setTimeZone("America/Los_Angeles");
+        event.setEnd(end);*/
+
+        //String[] recurrence = new String[] {"RRULE:FREQ=DAILY;COUNT=2"};
+        //event.setRecurrence(Arrays.asList(recurrence));
+
+        /*EventAttendee[] attendees = new EventAttendee[] {
+                new EventAttendee().setEmail("lpage@example.com"),
+                new EventAttendee().setEmail("sbrin@example.com"),
+        };
+        event.setAttendees(Arrays.asList(attendees));
+
+        EventReminder[] reminderOverrides = new EventReminder[] {
+                new EventReminder().setMethod("email").setMinutes(24 * 60),
+                new EventReminder().setMethod("popup").setMinutes(10),
+        };
+        Event.Reminders reminders = new Event.Reminders()
+                .setUseDefault(false)
+                .setOverrides(Arrays.asList(reminderOverrides));
+        event.setReminders(reminders);*/
+
+        /*String calendarId = "i3jbqatm5hjsmf101mfd0isadk@group.calendar.google.com";
+        try{
+            event = mService.events().insert(calendarId, event).execute();
+        } catch (Exception e){
+            Log.e("Insert","Inserting didn't work" + e.getMessage());
+        }*/
+        //System.out.printf("Event created: %s\n", event.getHtmlLink());
+
+        //new InsertTask().execute();
+
     }
 
     /**
@@ -189,7 +244,9 @@ public class MainActivity extends Activity
         if (! isGooglePlayServicesAvailable()) {
             acquireGooglePlayServices();
         }  else if (! isDeviceOnline()) {
-            mOutputText.setText("No network connection available.");
+            //mOutputText.setText("No network connection available.");
+            Toast.makeText(MainActivity.this, "No network connection availible",
+                    Toast.LENGTH_LONG).show();
             Log.e("Debugging", "No network connection available");
         } else if (mCredential.getSelectedAccountName() == null) {
             chooseAccount();
@@ -253,12 +310,14 @@ public class MainActivity extends Activity
                 SharedPreferences settings2 = getSharedPreferences(PREFS_NAME, 0);
                 SharedPreferences.Editor editor2 = settings2.edit();
                 editor2.putBoolean("silentMode", wantsNotes);
-                editor2.commit();
+                editor2.apply();
                 break;
             case REQUEST_GOOGLE_PLAY_SERVICES:
                 if (resultCode != RESULT_OK) {
-                    mOutputText.setText(
-                            "This app requires Google Play Services. Please install Google Play Services on your device and relaunch this app.");
+                    //mOutputText.setText(
+                    //        "This app requires Google Play Services. Please install Google Play Services on your device and relaunch this app.");
+                    Toast.makeText(MainActivity.this, "This app requires Google Play Services. Please install Google Play Services on your device and relaunch this app.",
+                            Toast.LENGTH_LONG).show();
                     Log.e("Debugging", "This app requires Google Play Services. Please install Google Play Services on your device and relaunch this app.");
                 } else {
                     getResultsFromApi();
@@ -384,12 +443,27 @@ public class MainActivity extends Activity
         dialog.show();
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * An asynchronous task that handles the Google Calendar API call.
      * Placing the API calls in their own task ensures the UI stays responsive.
      */
     private class MakeRequestTask extends AsyncTask<Void, Void, List<String>> {
-        private com.google.api.services.calendar.Calendar mService = null;
+        //private com.google.api.services.calendar.Calendar mService = null;
         private Exception mLastError = null;
 
         MakeRequestTask(GoogleAccountCredential credential) {
@@ -448,7 +522,6 @@ public class MainActivity extends Activity
                 compactCalendarView.addEvent(temp, false);
                 customEvent tempEvent = new customEvent(event.getSummary(), event.getDescription(), start.getValue());
                 customEvents.add(tempEvent);
-                //Log.v("NoReason", "Thats not Good");
                 eventStrings.add(
                         String.format("%s (%s)", event.getSummary(), start));
             }
@@ -467,7 +540,9 @@ public class MainActivity extends Activity
         protected void onPostExecute(List<String> output) {
             mProgress.hide();
             if (output == null || output.size() == 0) {
-                mOutputText.setText("No results returned.");
+                //mOutputText.setText("No results returned.");
+                Toast.makeText(MainActivity.this, "No results returned",
+                        Toast.LENGTH_LONG).show();
                 Log.e("Debugging", "No results returned");
             } else {
                 output.add(0, "Data retrieved using the Google Calendar API:");
@@ -488,12 +563,16 @@ public class MainActivity extends Activity
                             ((UserRecoverableAuthIOException) mLastError).getIntent(),
                             MainActivity.REQUEST_AUTHORIZATION);
                 } else {
-                    mOutputText.setText("The following error occurred:\n"
-                            + mLastError.getMessage());
+                    //mOutputText.setText("The following error occurred:\n"
+                    //        + mLastError.getMessage());
+                    Toast.makeText(MainActivity.this, "The following error occured:\n" + mLastError.getMessage(),
+                            Toast.LENGTH_LONG).show();
                     Log.e("Debugging", "The following error occurred: " + mLastError.getMessage());
                 }
             } else {
-                mOutputText.setText("Request cancelled.");
+                //mOutputText.setText("Request cancelled.");
+                Toast.makeText(MainActivity.this, "Request cancelled",
+                        Toast.LENGTH_LONG).show();
                 Log.e("Debugging", "Request cancelled.");
             }
         }
@@ -501,7 +580,99 @@ public class MainActivity extends Activity
 
 
 
+
+
+
+
+
+
+
+    /**
+     * An asynchronous task that handles the Google Calendar API call.
+     * Placing the API calls in their own task ensures the UI stays responsive.
+     */
+    private class InsertTask extends AsyncTask<Void, Void, List<String>> {
+        //private Exception mLastError = null;
+        Event event;
+        DateTime startDateTime;
+        EventDateTime start;
+        DateTime endDateTime;
+        EventDateTime end;
+
+        InsertTask() {
+            event = new Event()
+                    .setSummary("Added event")
+                    .setLocation("800 Howard St., San Francisco, CA 94103")
+                    .setDescription("This was added through code");
+
+            startDateTime = new DateTime("2017-07-04T09:00:00-07:00");
+            start = new EventDateTime()
+                    .setDateTime(startDateTime)
+                    .setTimeZone("America/Los_Angeles");
+            event.setStart(start);
+
+            endDateTime = new DateTime("2017-07-04T17:00:00-07:00");
+            end = new EventDateTime()
+                    .setDateTime(endDateTime)
+                    .setTimeZone("America/Los_Angeles");
+            event.setEnd(end);
+        }
+
+        /**
+         * Background task to call Google Calendar API.
+         * @param params no parameters needed for this task.
+         */
+        @Override
+        protected List<String> doInBackground(Void... params) {
+            String calendarId = "i3jbqatm5hjsmf101mfd0isadk@group.calendar.google.com";
+            try{
+                event = mService.events().insert(calendarId, event).execute();
+                return null;
+            } catch (Exception e){
+                Log.e("Insert","Inserting didn't work: " + e.getMessage());
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected void onPostExecute(List<String> output) {
+        }
+
+        @Override
+        protected void onCancelled() {
+        }
+    }
+
     //function for the Events/Calendar button goes here
 
     //Function for the Donation button goes here.
+    // these functions are not quite finished. We need to find out the correct URL
+    // to send them to in order to make a donation.
+
+    /**
+     * Sends user to correct site to make a donation
+     */
+    public void goToPayPal(View view) {
+        goToUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WQCMX4SDALH3E");
+    }
+
+    /**
+     * Sends user to contact info page on website
+     */
+    public void goToUzaziVillage(View view) {
+        goToUrl("http://www.uzazivillage.org/about-us/contact-us/");
+}
+
+    /**
+     * Assists in sending user to a webpage outside the app
+     */
+    public void goToUrl(String url) {
+        Uri theUrl = Uri.parse(url);
+        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, theUrl);
+        startActivity(launchBrowser);
+    }
 }
