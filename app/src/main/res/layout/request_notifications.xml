@@ -8,18 +8,19 @@
     tools:context="com.example.carsonwoodford.uzazicalendar.View_Event">
 
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="358dp"
-        android:layout_height="138dp"
+        android:id="@+id/graphic"
+        android:layout_width="360dp"
+        android:layout_height="140dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/compactcalendar_view"
+        android:contentDescription="@string/uzazi_graphic"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.372"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/uzazi_graphic" />
 
     <TextView
@@ -30,7 +31,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:text="Would you like to receive push notifications about events happening at Uzazi Village?"
+        android:text="@string/wantsNotifications"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/colorText"
@@ -51,7 +52,7 @@
         android:layout_marginTop="8dp"
         android:background="@color/colorAccent"
         android:onClick="canNotifyPressed"
-        android:text="Yes!"
+        android:text="@string/yes"
         android:textColor="@color/colorText"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -71,7 +72,7 @@
         android:layout_marginTop="8dp"
         android:background="@color/colorAccent"
         android:onClick="cantNotifyPressed"
-        android:text="No"
+        android:text="@string/no"
         android:textColor="@color/colorText"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"

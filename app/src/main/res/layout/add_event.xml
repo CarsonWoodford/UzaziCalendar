@@ -8,18 +8,19 @@
     tools:context="com.example.carsonwoodford.uzazicalendar.View_Event">
 
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="358dp"
-        android:layout_height="138dp"
+        android:id="@+id/graphic"
+        android:layout_width="360dp"
+        android:layout_height="140dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/compactcalendar_view"
+        android:contentDescription="@string/uzazi_graphic"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.372"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/uzazi_graphic" />
 
     <EditText
@@ -30,7 +31,8 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:text="eventTime"
+        android:inputType="text"
+        android:text="@string/eventTime"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textSize="16sp"
@@ -48,7 +50,8 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:text="eventDate"
+        android:inputType="text"
+        android:text="@string/eventDate"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textSize="16sp"
@@ -66,7 +69,8 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:text="eventName"
+        android:inputType="text"
+        android:text="@string/eventName"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textSize="16sp"
@@ -74,7 +78,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.307" />
+        app:layout_constraintVertical_bias="0.303" />
     <!-- comment -->
     <EditText
         android:id="@+id/eventDescription"
@@ -85,7 +89,8 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:text="eventDescription"
+        android:inputType="textMultiLine"
+        android:text="@string/eventDescription"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/colorText"
