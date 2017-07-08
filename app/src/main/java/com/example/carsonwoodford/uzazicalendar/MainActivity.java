@@ -657,7 +657,7 @@ public class MainActivity extends Activity
      * Sends user to correct site to make a donation
      */
     public void goToPayPal(View view) {
-        goToUrl("https://www.paypal.com/");
+        goToUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WQCMX4SDALH3E");
     }
 
     /**
