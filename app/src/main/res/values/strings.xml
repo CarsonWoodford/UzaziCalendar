@@ -18,6 +18,13 @@
     <string name=".org">www.uzazivillage.org</string>
     <string name=".com">www.uzazivillage.com</string>
     <string name="facebook">Visit our Facebook Page!</string>
+    <string name="summary">Summary</string>
+    <string name="time">Time</string>
+    <string name="eventTitle">Event Title</string>
+    <string name="am">AM</string>
+    <string name="pm">PM</string>
+    <string name="add">Add</string>
+
     <string-array name="hours_array">
         <item>1</item>
         <item>2</item>
