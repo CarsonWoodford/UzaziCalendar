@@ -60,7 +60,7 @@ import java.util.List;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-import com.google.gson.Gson;
+//import com.google.gson.Gson;
 
 import static java.security.AccessController.getContext;
 import static junit.framework.Assert.assertEquals;
@@ -121,8 +121,6 @@ public class MainActivity extends Activity
             startActivityForResult(new Intent(MainActivity.this, RequestNotifications.class), requestCode);
         }*/
 
-
-        //mOutputText = (TextView) this.findViewById(R.id.ToBeDeleted);
         mOutputText = new TextView(this);
         //assertEquals(items, events.getItems());
         //assertTrue(JSON_FACTORY == JacksonFactory.getDefaultInstance());
@@ -132,12 +130,7 @@ public class MainActivity extends Activity
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        //mOutputText = (TextView) findViewById(R.id.ToBeDeleted);
         mOutputText.setText("");
-        //mOutputText.setLayoutParams(tlp);
-        //mOutputText.setPadding(16, 16, 16, 16);
-        //mOutputText.setVerticalScrollBarEnabled(true);
-        //mOutputText.setMovementMethod(new ScrollingMovementMethod());
         mOutputText.setText(
                 "Click the \'" + BUTTON_TEXT +"\' button to test the API.");
 
@@ -176,8 +169,6 @@ public class MainActivity extends Activity
                         }
                     }
                 }
-                //Gson gson = new Gson();
-                //intent.putExtra(PASSED_CALENDAR, gson.toJson(mCredential));
                 if (areEvents)
                     startActivity(intent);
                 else {
@@ -195,8 +186,6 @@ public class MainActivity extends Activity
             public void onMonthScroll(Date firstDayOfNewMonth) {
             }
         });
-
-        //new InsertTask().execute();
 
     }
 
@@ -283,20 +272,9 @@ public class MainActivity extends Activity
 
                 new InsertTask(data.getStringExtra("title"), data.getStringExtra("summary"), data.getLongExtra("date", -1)).execute();
 
-
-                ////////////////////////////////////////////////////////////////////////
-
-                //////////////////////////////////////////////
-
-                ///////////////////////////////////////////////////////////////////////
-
-
-
                 break;
             case REQUEST_GOOGLE_PLAY_SERVICES:
                 if (resultCode != RESULT_OK) {
-                    //mOutputText.setText(
-                    //        "This app requires Google Play Services. Please install Google Play Services on your device and relaunch this app.");
                     Toast.makeText(MainActivity.this, "This app requires Google Play Services. Please install Google Play Services on your device and relaunch this app.",
                             Toast.LENGTH_LONG).show();
                     Log.e("Debugging", "This app requires Google Play Services. Please install Google Play Services on your device and relaunch this app.");
@@ -497,7 +475,6 @@ public class MainActivity extends Activity
                     // All-day events don't have start times, so just use
                     // the start date.
                     start = event.getStart().getDate();
-                    //Log.v("NoReason", "called");
                 }
                 com.github.sundeepk.compactcalendarview.domain.Event temp = new com.github.sundeepk.compactcalendarview.domain.Event(Color.MAGENTA, start.getValue(), event.getSummary());
                 compactCalendarView.addEvent(temp, false);
@@ -521,7 +498,6 @@ public class MainActivity extends Activity
         protected void onPostExecute(List<String> output) {
             mProgress.hide();
             if (output == null || output.size() == 0) {
-                //mOutputText.setText("No results returned.");
                 Toast.makeText(MainActivity.this, "No results returned",
                         Toast.LENGTH_LONG).show();
                 Log.e("Debugging", "No results returned");
@@ -544,14 +520,11 @@ public class MainActivity extends Activity
                             ((UserRecoverableAuthIOException) mLastError).getIntent(),
                             MainActivity.REQUEST_AUTHORIZATION);
                 } else {
-                    //mOutputText.setText("The following error occurred:\n"
-                    //        + mLastError.getMessage());
                     Toast.makeText(MainActivity.this, "The following error occured:\n" + mLastError.getMessage(),
                             Toast.LENGTH_LONG).show();
                     Log.e("Debugging", "The following error occurred: " + mLastError.getMessage());
                 }
             } else {
-                //mOutputText.setText("Request cancelled.");
                 Toast.makeText(MainActivity.this, "Request cancelled",
                         Toast.LENGTH_LONG).show();
                 Log.e("Debugging", "Request cancelled.");
@@ -573,7 +546,6 @@ public class MainActivity extends Activity
      * Placing the API calls in their own task ensures the UI stays responsive.
      */
     private class InsertTask extends AsyncTask<Void, Void, List<String>> {
-        //private Exception mLastError = null;
         Event event;
         DateTime startDateTime;
         EventDateTime start;

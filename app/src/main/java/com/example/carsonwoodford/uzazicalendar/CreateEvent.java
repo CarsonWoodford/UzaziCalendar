@@ -80,6 +80,10 @@ public class CreateEvent extends AppCompatActivity implements AdapterView.OnItem
         // parent.getItemAtPosition(pos)
         switch (parent.getId()){
             case R.id.Minutes:
+
+                //////////////
+                //change values here to represent new numbers
+                //////////////
                 if(pos < 10)
                     minuteCount = "0" + String.valueOf(pos);
                 else
