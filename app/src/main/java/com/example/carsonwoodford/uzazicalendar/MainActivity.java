@@ -60,6 +60,8 @@ import java.util.List;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
+import com.google.gson.Gson;
+
 import static java.security.AccessController.getContext;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
@@ -86,10 +88,13 @@ public class MainActivity extends Activity
     static final int REQUEST_PERMISSION_GET_ACCOUNTS = 1003;
     static final String STATE_NOTIFICATIONS = "WantsNotifications";
 
+    static final int ADD_EVENT_RETURN = 5000;
+
     private static final String BUTTON_TEXT = "Call Google Calendar API";
-    private static final String PREF_ACCOUNT_NAME = "accountName";
-    private static final String[] SCOPES = { CalendarScopes.CALENDAR };
+    public static final String PREF_ACCOUNT_NAME = "accountName";
+    public static final String[] SCOPES = { CalendarScopes.CALENDAR };
     public static final String PASSED_EVENTS = "Passed Events";
+    public static final String PASSED_CALENDAR = "Passed Calendar";
     public static final String PREFS_NAME = "MyPrefsFile";
 
     private com.google.api.services.calendar.Calendar mService = null;
@@ -161,16 +166,25 @@ public class MainActivity extends Activity
              */
             @Override
             public void onDayClick(Date dateClicked) {
+                boolean areEvents = false;
                 List<com.github.sundeepk.compactcalendarview.domain.Event> events = compactCalendarView.getEvents(dateClicked);
                 for (com.github.sundeepk.compactcalendarview.domain.Event element : events){
                     for (customEvent elementOther : customEvents) {
                         if (element.getTimeInMillis() == elementOther.getTime()) {
                             intent.putExtra(PASSED_EVENTS, elementOther);
+                            areEvents = true;
                         }
                     }
                 }
-                //intent.putExtra(PASSED_EVENTS, events.toString());
-                startActivity(intent);
+                //Gson gson = new Gson();
+                //intent.putExtra(PASSED_CALENDAR, gson.toJson(mCredential));
+                if (areEvents)
+                    startActivity(intent);
+                else {
+                    Intent intentOther = new Intent(MainActivity.this, CreateEvent.class);
+                    intentOther.putExtra(PASSED_EVENTS, dateClicked.getTime());
+                    startActivityForResult(intentOther, ADD_EVENT_RETURN);
+                }
             }
 
             /**
@@ -181,53 +195,6 @@ public class MainActivity extends Activity
             public void onMonthScroll(Date firstDayOfNewMonth) {
             }
         });
-
-
-
-
-        //Test to insert an event
-        /*Event event = new Event()
-                .setSummary("Added event")
-                .setLocation("800 Howard St., San Francisco, CA 94103")
-                .setDescription("This was added through code");
-
-        DateTime startDateTime = new DateTime("2017-07-04T09:00:00-07:00");
-        EventDateTime start = new EventDateTime()
-                .setDateTime(startDateTime)
-                .setTimeZone("America/Los_Angeles");
-        event.setStart(start);
-
-        DateTime endDateTime = new DateTime("2017-07-04T17:00:00-07:00");
-        EventDateTime end = new EventDateTime()
-                .setDateTime(endDateTime)
-                .setTimeZone("America/Los_Angeles");
-        event.setEnd(end);*/
-
-        //String[] recurrence = new String[] {"RRULE:FREQ=DAILY;COUNT=2"};
-        //event.setRecurrence(Arrays.asList(recurrence));
-
-        /*EventAttendee[] attendees = new EventAttendee[] {
-                new EventAttendee().setEmail("lpage@example.com"),
-                new EventAttendee().setEmail("sbrin@example.com"),
-        };
-        event.setAttendees(Arrays.asList(attendees));
-
-        EventReminder[] reminderOverrides = new EventReminder[] {
-                new EventReminder().setMethod("email").setMinutes(24 * 60),
-                new EventReminder().setMethod("popup").setMinutes(10),
-        };
-        Event.Reminders reminders = new Event.Reminders()
-                .setUseDefault(false)
-                .setOverrides(Arrays.asList(reminderOverrides));
-        event.setReminders(reminders);*/
-
-        /*String calendarId = "i3jbqatm5hjsmf101mfd0isadk@group.calendar.google.com";
-        try{
-            event = mService.events().insert(calendarId, event).execute();
-        } catch (Exception e){
-            Log.e("Insert","Inserting didn't work" + e.getMessage());
-        }*/
-        //System.out.printf("Event created: %s\n", event.getHtmlLink());
 
         //new InsertTask().execute();
 
@@ -311,6 +278,20 @@ public class MainActivity extends Activity
                 SharedPreferences.Editor editor2 = settings2.edit();
                 editor2.putBoolean("silentMode", wantsNotes);
                 editor2.apply();
+                break;
+            case ADD_EVENT_RETURN:
+
+                new InsertTask(data.getStringExtra("title"), data.getStringExtra("summary"), data.getLongExtra("date", -1)).execute();
+
+
+                ////////////////////////////////////////////////////////////////////////
+
+                //////////////////////////////////////////////
+
+                ///////////////////////////////////////////////////////////////////////
+
+
+
                 break;
             case REQUEST_GOOGLE_PLAY_SERVICES:
                 if (resultCode != RESULT_OK) {
@@ -599,19 +580,20 @@ public class MainActivity extends Activity
         DateTime endDateTime;
         EventDateTime end;
 
-        InsertTask() {
+        InsertTask(String title, String description, Long startingDate) {
             event = new Event()
-                    .setSummary("Added event")
-                    .setLocation("800 Howard St., San Francisco, CA 94103")
-                    .setDescription("This was added through code");
+                    .setSummary(title)
+                    .setLocation(" ")
+                    .setDescription(description);
 
-            startDateTime = new DateTime("2017-07-04T09:00:00-07:00");
+            //startDateTime = new DateTime("2017-07-10T09:00:00-07:00");
+            startDateTime = new DateTime(startingDate);
             start = new EventDateTime()
                     .setDateTime(startDateTime)
                     .setTimeZone("America/Los_Angeles");
             event.setStart(start);
 
-            endDateTime = new DateTime("2017-07-04T17:00:00-07:00");
+            endDateTime = new DateTime(startingDate+30000);
             end = new EventDateTime()
                     .setDateTime(endDateTime)
                     .setTimeZone("America/Los_Angeles");

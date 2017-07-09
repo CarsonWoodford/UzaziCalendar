@@ -4,6 +4,8 @@ package com.example.carsonwoodford.uzazicalendar;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.api.services.calendar.Calendar;
+
 import java.sql.Time;
 import java.util.Date;
 /**
@@ -21,6 +23,7 @@ public class customEvent implements Parcelable{
     private String loc;  //event location
     private String desc; //event description
     private String ppl;  //event participants
+
 
     /**
      * Default constructor.

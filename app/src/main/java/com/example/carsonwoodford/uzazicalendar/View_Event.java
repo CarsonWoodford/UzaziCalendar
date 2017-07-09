@@ -1,18 +1,39 @@
 package com.example.carsonwoodford.uzazicalendar;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
+import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.DateTime;
+import com.google.api.client.util.ExponentialBackOff;
+import com.google.api.services.calendar.Calendar;
+import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventDateTime;
+import com.google.gson.Gson;
+
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * View Event is called to display the google calendar information
  * for the date pressed using the activity_events.xml
  */
 public class View_Event extends AppCompatActivity {
+
+    Calendar mService = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +42,7 @@ public class View_Event extends AppCompatActivity {
 
         Intent intent = getIntent();
         customEvent event = intent.getParcelableExtra(MainActivity.PASSED_EVENTS);
+
 
         TextView title = (TextView) findViewById(R.id.eventName);
         TextView date = (TextView) findViewById(R.id.textView2);
@@ -45,7 +67,7 @@ public class View_Event extends AppCompatActivity {
             time.setText("No set time");
             summary.setText("No description availible.");
         }
-    }
 
+    }
 
 }
