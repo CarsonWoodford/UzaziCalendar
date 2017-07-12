@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorAlternateBackground"
     tools:context="com.example.carsonwoodford.uzazicalendar.MainActivity"
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp">
@@ -18,14 +18,14 @@
         android:layout_height="250dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        app:compactCalendarBackgroundColor="@color/colorPrimary"
+        app:compactCalendarBackgroundColor="@color/colorAlternateBackground"
         app:compactCalendarCurrentDayBackgroundColor="@color/colorText"
         app:compactCalendarCurrentSelectedDayBackgroundColor="@color/colorPrimaryDark"
         app:compactCalendarMultiEventIndicatorColor="@color/colorAccent"
         app:compactCalendarTargetHeight="250dp"
         app:compactCalendarTextColor="@color/colorAccent"
         app:compactCalendarTextSize="12sp"
-        tools:compactCalendarBackgroundColor="@color/colorPrimary"
+        tools:compactCalendarBackgroundColor="@color/colorAlternateBackground"
         tools:compactCalendarCurrentDayBackgroundColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
@@ -35,8 +35,8 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintVertical_bias="0.681" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintVertical_bias="0.621" />
 
     <Button
         android:id="@+id/DonateButton"
@@ -46,10 +46,11 @@
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
         android:layout_marginTop="8dp"
-        android:background="@color/colorAccent"
+        android:background="@color/colorPrimaryDark"
         android:onClick="goToPayPal"
         android:text="@string/DonateButton"
-        android:textColor="@color/colorText"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.136"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -65,16 +66,17 @@
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
         android:layout_marginTop="8dp"
-        android:background="@color/colorAccent"
+        android:background="@color/colorPrimaryDark"
         android:onClick="goToUzaziVillage"
-        android:text="Contact Us"
-        android:textColor="@color/colorText"
+        android:text="@string/contactus"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.862"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.929"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintVertical_bias="0.929" />
 
     <ImageView
         android:id="@+id/graphic"
@@ -85,12 +87,12 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="16dp"
         android:contentDescription="@string/uzazi_graphic"
-        android:src="@drawable/uzazi_graphic"
-        app:layout_constraintBottom_toTopOf="@+id/compactcalendar_view"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.423" />
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/uzazi_graphic" />
 
 
 
