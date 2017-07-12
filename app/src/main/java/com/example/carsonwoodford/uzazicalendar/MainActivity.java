@@ -269,9 +269,9 @@ public class MainActivity extends Activity
                 editor2.apply();
                 break;
             case ADD_EVENT_RETURN:
-
-                new InsertTask(data.getStringExtra("title"), data.getStringExtra("summary"), data.getLongExtra("date", -1)).execute();
-
+                if (data != null)
+                    if (data.hasExtra("title") && data.hasExtra("summary") && data.hasExtra("date"))
+                        new InsertTask(data.getStringExtra("title"), data.getStringExtra("summary"), data.getLongExtra("date", -1)).execute();
                 break;
             case REQUEST_GOOGLE_PLAY_SERVICES:
                 if (resultCode != RESULT_OK) {

@@ -58,17 +58,16 @@ public class CreateEvent extends AppCompatActivity implements AdapterView.OnItem
 
         hours.setOnItemSelectedListener(this);
         minutes.setOnItemSelectedListener(this);
-        //Log.v("ValueCheck", Long.toString(date.getTime()));
-
-        //Date test = new Date(1998, 5, 5, 9, 9, 9);
     }
 
     public void buttonPressed(View v){
         Intent returnIntent = new Intent();
-        returnIntent.putExtra("title", title.getText());
-        returnIntent.putExtra("summary", summary.getText());
-        //returnIntent.putExtra("hours", adapter.getItem());
-        returnIntent.putExtra("date", date.getTime() + (3600000 * Long.parseLong(hourCount, 10) + (60000 * Long.parseLong(minuteCount, 10))));
+        returnIntent.putExtra("title", title.getText().toString());
+        returnIntent.putExtra("summary", summary.getText().toString());
+        long timeToAdd = (3600000 * Long.parseLong(hourCount, 10) + (60000 * Long.parseLong(minuteCount, 10)));
+        if (toggleButton.isChecked())
+            timeToAdd += 43200000;
+        returnIntent.putExtra("date", date.getTime() + timeToAdd);
         setResult(Activity.RESULT_OK,returnIntent);
         finish();
     }
@@ -80,17 +79,13 @@ public class CreateEvent extends AppCompatActivity implements AdapterView.OnItem
         // parent.getItemAtPosition(pos)
         switch (parent.getId()){
             case R.id.Minutes:
-
-                //////////////
-                //change values here to represent new numbers
-                //////////////
-                if(pos < 10)
-                    minuteCount = "0" + String.valueOf(pos);
-                else
-                    minuteCount = String.valueOf(pos);
+                minuteCount = String.valueOf(pos*5);
                 break;
             case R.id.Hours:
-                hourCount = String.valueOf(pos+1);
+                if (pos != 11)
+                    hourCount = String.valueOf(pos+1);
+                else
+                    hourCount = "0";
                 break;
         }
     }
