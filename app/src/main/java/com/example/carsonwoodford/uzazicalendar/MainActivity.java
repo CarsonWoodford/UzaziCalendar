@@ -620,8 +620,10 @@ public class MainActivity extends Activity
      * Sends user to contact info page on website
      */
     public void goToUzaziVillage(View view) {
-        goToUrl("http://www.uzazivillage.org/about-us/contact-us/");
-}
+        //goToUrl("http://www.uzazivillage.org/about-us/contact-us/");
+        Intent myIntent = new Intent(this, Contact.class);
+        startActivity(myIntent);
+    }
 
     /**
      * Assists in sending user to a webpage outside the app

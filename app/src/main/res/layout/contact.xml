@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAlternateBackground"
-    tools:context="com.example.carsonwoodford.uzazicalendar.View_Event">
+    tools:context="com.example.carsonwoodford.uzazicalendar.Contact">
 
     <ImageView
         android:id="@+id/graphic"
