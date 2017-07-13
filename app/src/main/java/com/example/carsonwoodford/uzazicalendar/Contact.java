@@ -13,10 +13,6 @@ public class Contact extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.contact);
-
-        Button facebook = (Button) findViewById(R.id.facebook);
-        Button com = (Button) findViewById(R.id._com);
-        Button org = (Button) findViewById(R.id._org);
     }
 
     public void goToFacebook(View view) {
