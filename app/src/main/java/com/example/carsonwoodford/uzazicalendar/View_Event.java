@@ -33,8 +33,6 @@ import java.util.List;
  */
 public class View_Event extends AppCompatActivity {
 
-    Calendar mService = null;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +43,7 @@ public class View_Event extends AppCompatActivity {
 
 
         TextView title = (TextView) findViewById(R.id.eventName);
-        TextView date = (TextView) findViewById(R.id.textView2);
+        TextView date = (TextView) findViewById(R.id.eventDate);
         TextView time = (TextView) findViewById(R.id.eventTime);
         TextView summary = (TextView) findViewById(R.id.eventDescription);
 
@@ -54,11 +52,13 @@ public class View_Event extends AppCompatActivity {
 
             Date d = new Date(event.getTime());
             date.setText(java.text.DateFormat.getDateInstance().format(d));
+            //date.setText("Hello");
             time.setText(new SimpleDateFormat("hh:mm a").format(d));
 
-            if (event.getDesc() != "" && event.getDesc() != null && event.getDesc() != " ")
-                summary.setText(event.getDesc());
-            else
+            if (event.getDesc() != null) {
+                if (!event.getDesc().equals("") && !event.getDesc().equals(" "))
+                    summary.setText(event.getDesc());
+            } else
                 summary.setText("No description availible.");
         }
         else {

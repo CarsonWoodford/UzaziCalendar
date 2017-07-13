@@ -459,7 +459,8 @@ public class MainActivity extends Activity
             DateTime now = new DateTime(System.currentTimeMillis());
             List<String> eventStrings = new ArrayList<String>();
             CalendarListEntry publicCalendar = new CalendarListEntry();
-            publicCalendar.setId("i3jbqatm5hjsmf101mfd0isadk@group.calendar.google.com");
+            //publicCalendar.setId("i3jbqatm5hjsmf101mfd0isadk@group.calendar.google.com");
+            publicCalendar.setId("info@uzazivillage.com");
             mService.calendarList().insert(publicCalendar);
             Events events = mService.events().list(publicCalendar.getId())
                     .setMaxResults(20)
@@ -578,7 +579,8 @@ public class MainActivity extends Activity
          */
         @Override
         protected List<String> doInBackground(Void... params) {
-            String calendarId = "i3jbqatm5hjsmf101mfd0isadk@group.calendar.google.com";
+            //String calendarId = "i3jbqatm5hjsmf101mfd0isadk@group.calendar.google.com";
+            String calendarId = "info@uzazivillage.com";
             try{
                 event = mService.events().insert(calendarId, event).execute();
                 return null;
