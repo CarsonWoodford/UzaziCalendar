@@ -640,4 +640,13 @@ public class MainActivity extends Activity
         Intent launchBrowser = new Intent(Intent.ACTION_VIEW, theUrl);
         startActivity(launchBrowser);
     }
+
+
+    public void goOneRight(View view){
+        compactCalendarView.showNextMonth();
+    }
+
+    public void goOneLeft(View view){
+        compactCalendarView.showPreviousMonth();
+    }
 }
