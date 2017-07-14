@@ -101,6 +101,7 @@ public class MainActivity extends Activity
     private com.google.api.services.calendar.Calendar mService = null;
 
     CompactCalendarView compactCalendarView;
+    TextView monthDisplay;
 
     List<customEvent> customEvents = new ArrayList<customEvent>();
 
@@ -188,7 +189,7 @@ public class MainActivity extends Activity
             }
         });
 
-        TextView monthDisplay = (TextView) findViewById(R.id.monthDisplayed);
+        monthDisplay = (TextView) findViewById(R.id.monthDisplayed);
 
         Date temp = compactCalendarView.getFirstDayOfCurrentMonth();
         monthDisplay.setText(new SimpleDateFormat("MMMM").format(temp));
@@ -470,7 +471,7 @@ public class MainActivity extends Activity
             publicCalendar.setId("info@uzazivillage.com");
             mService.calendarList().insert(publicCalendar);
             Events events = mService.events().list(publicCalendar.getId())
-                    .setMaxResults(20)
+                    .setMaxResults(40)
                     .setTimeMin(now)
                     .setOrderBy("startTime")
                     .setSingleEvents(true)
@@ -644,9 +645,13 @@ public class MainActivity extends Activity
 
     public void goOneRight(View view){
         compactCalendarView.showNextMonth();
+        Date temp = compactCalendarView.getFirstDayOfCurrentMonth();
+        monthDisplay.setText(new SimpleDateFormat("MMMM").format(temp));
     }
 
     public void goOneLeft(View view){
         compactCalendarView.showPreviousMonth();
+        Date temp = compactCalendarView.getFirstDayOfCurrentMonth();
+        monthDisplay.setText(new SimpleDateFormat("MMMM").format(temp));
     }
 }
