@@ -52,6 +52,7 @@ import android.widget.Toast;
 
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -186,6 +187,12 @@ public class MainActivity extends Activity
             public void onMonthScroll(Date firstDayOfNewMonth) {
             }
         });
+
+        TextView monthDisplay = (TextView) findViewById(R.id.monthDisplayed);
+
+        Date temp = compactCalendarView.getFirstDayOfCurrentMonth();
+        monthDisplay.setText(new SimpleDateFormat("MMMM").format(temp));
+
 
     }
 

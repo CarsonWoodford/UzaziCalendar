@@ -52,7 +52,6 @@ public class View_Event extends AppCompatActivity {
 
             Date d = new Date(event.getTime());
             date.setText(java.text.DateFormat.getDateInstance().format(d));
-            //date.setText("Hello");
             time.setText(new SimpleDateFormat("hh:mm a").format(d));
 
             if (event.getDesc() != null) {
