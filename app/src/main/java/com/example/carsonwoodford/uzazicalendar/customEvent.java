@@ -18,7 +18,6 @@ import java.util.Date;
 public class customEvent implements Parcelable{
 
     private String name; //event name
-    //private Date date;   //event date
     private long time;   //event time
     private String loc;  //event location
     private String desc; //event description

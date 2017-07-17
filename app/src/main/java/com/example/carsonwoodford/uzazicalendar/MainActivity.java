@@ -208,7 +208,6 @@ public class MainActivity extends Activity
         if (! isGooglePlayServicesAvailable()) {
             acquireGooglePlayServices();
         }  else if (! isDeviceOnline()) {
-            //mOutputText.setText("No network connection available.");
             Toast.makeText(MainActivity.this, "No network connection availible",
                     Toast.LENGTH_LONG).show();
             Log.e("Debugging", "No network connection available");
